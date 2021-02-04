@@ -87,3 +87,60 @@ exports.onUnfollowUser = functions.firestore
       }
     });
   });
+
+exports.onCreatePost = functions.firestore
+  .document('/posts/{postId}')
+  .onCreate(async (snapshot, context) => {
+    const postId = context.params.postId;
+
+    // Get author id.
+    const authorRef = snapshot.get('author');
+    const authorId = authorRef.path.split('/')[1];
+
+    // Add new post to feeds of all followers.
+    const userFollowersRef = admin
+      .firestore()
+      .collection('followers')
+      .doc(authorId)
+      .collection('userFollowers');
+    const userFollowersSnapshot = await userFollowersRef.get();
+    userFollowersSnapshot.forEach((doc) => {
+      admin
+        .firestore()
+        .collection('feeds')
+        .doc(doc.id)
+        .collection('userFeed')
+        .doc(postId)
+        .set(snapshot.data());
+    });
+  });
+
+exports.onUpdatePost = functions.firestore
+  .document('/posts/{postId}')
+  .onUpdate(async (snapshot, context) => {
+    const postId = context.params.postId;
+
+    // Get author id.
+    const authorRef = snapshot.after.get('author');
+    const authorId = authorRef.path.split('/')[1];
+
+    // Update post data in each follower's feed.
+    const updatedPostData = snapshot.after.data();
+    const userFollowersRef = admin
+      .firestore()
+      .collection('followers')
+      .doc(authorId)
+      .collection('userFollowers');
+    const userFollowersSnapshot = await userFollowersRef.get();
+    userFollowersSnapshot.forEach(async (doc) => {
+      const postRef = admin
+        .firestore()
+        .collection('feeds')
+        .doc(doc.id)
+        .collection('userFeed');
+      const postDoc = await postRef.doc(postId).get();
+      if (postDoc.exists) {
+        postDoc.ref.update(updatedPostData);
+      }
+    });
+  });
