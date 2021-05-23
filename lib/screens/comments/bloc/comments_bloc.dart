@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_instagram/blocs/blocs.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'comments_event.dart';
 part 'comments_state.dart';
@@ -14,18 +13,18 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   final PostRepository _postRepository;
   final AuthBloc _authBloc;
 
-  StreamSubscription<List<Future<Comment>>> _commentsSubscription;
+  StreamSubscription<List<Future<Comment?>>>? _commentsSubscription;
 
   CommentsBloc({
-    @required PostRepository postRepository,
-    @required AuthBloc authBloc,
+    required PostRepository postRepository,
+    required AuthBloc authBloc,
   })  : _postRepository = postRepository,
         _authBloc = authBloc,
         super(CommentsState.initial());
 
   @override
   Future<void> close() {
-    _commentsSubscription.cancel();
+    _commentsSubscription?.cancel();
     return super.close();
   }
 
@@ -49,7 +48,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     try {
       _commentsSubscription?.cancel();
       _commentsSubscription = _postRepository
-          .getPostComments(postId: event.post.id)
+          .getPostComments(postId: event.post.id!)
           .listen((comments) async {
         final allComments = await Future.wait(comments);
         add(CommentsUpdateComments(comments: allComments));
@@ -77,16 +76,16 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   ) async* {
     yield state.copyWith(status: CommentsStatus.submitting);
     try {
-      final author = User.empty.copyWith(id: _authBloc.state.user.uid);
+      final author = User.empty.copyWith(id: _authBloc.state.user!.uid);
       final comment = Comment(
-        postId: state.post.id,
+        postId: state.post!.id!,
         author: author,
         content: event.content,
         date: DateTime.now(),
       );
 
       await _postRepository.createComment(
-        post: state.post,
+        post: state.post!,
         comment: comment,
       );
 

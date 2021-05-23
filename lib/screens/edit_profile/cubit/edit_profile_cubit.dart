@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
 import 'package:flutter_instagram/screens/profile/bloc/profile_bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'edit_profile_state.dart';
 
@@ -15,9 +14,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final ProfileBloc _profileBloc;
 
   EditProfileCubit({
-    @required UserRepository userRepository,
-    @required StorageRepository storageRepository,
-    @required ProfileBloc profileBloc,
+    required UserRepository userRepository,
+    required StorageRepository storageRepository,
+    required ProfileBloc profileBloc,
   })  : _userRepository = userRepository,
         _storageRepository = storageRepository,
         _profileBloc = profileBloc,
@@ -53,7 +52,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       if (state.profileImage != null) {
         profileImageUrl = await _storageRepository.uploadProfileImage(
           url: profileImageUrl,
-          image: state.profileImage,
+          image: state.profileImage!,
         );
       }
 

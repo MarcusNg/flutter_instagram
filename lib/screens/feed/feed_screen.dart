@@ -12,7 +12,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _FeedScreenState extends State<FeedScreen> {
             builder: (context) => ErrorDialog(content: state.failure.message),
           );
         } else if (state.status == FeedStatus.paginating) {
-          Scaffold.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).primaryColor,
               duration: const Duration(seconds: 1),
@@ -81,7 +81,6 @@ class _FeedScreenState extends State<FeedScreen> {
           onRefresh: () async {
             context.read<FeedBloc>().add(FeedFetchPosts());
             context.read<LikedPostsCubit>().clearAllLikedPosts();
-            return true;
           },
           child: ListView.builder(
             controller: _scrollController,
@@ -89,7 +88,7 @@ class _FeedScreenState extends State<FeedScreen> {
             itemBuilder: (BuildContext context, int index) {
               final post = state.posts[index];
               final likedPostsState = context.watch<LikedPostsCubit>().state;
-              final isLiked = likedPostsState.likedPostIds.contains(post.id);
+              final isLiked = likedPostsState.likedPostIds.contains(post!.id);
               final recentlyLiked =
                   likedPostsState.recentlyLikedPostIds.contains(post.id);
               return PostView(

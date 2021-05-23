@@ -6,7 +6,6 @@ import 'package:flutter_instagram/blocs/blocs.dart';
 import 'package:flutter_instagram/cubits/cubits.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -17,13 +16,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthBloc _authBloc;
   final LikedPostsCubit _likedPostsCubit;
 
-  StreamSubscription<List<Future<Post>>> _postsSubscription;
+  StreamSubscription<List<Future<Post?>>>? _postsSubscription;
 
   ProfileBloc({
-    @required UserRepository userRepository,
-    @required PostRepository postRepository,
-    @required AuthBloc authBloc,
-    @required LikedPostsCubit likedPostsCubit,
+    required UserRepository userRepository,
+    required PostRepository postRepository,
+    required AuthBloc authBloc,
+    required LikedPostsCubit likedPostsCubit,
   })  : _userRepository = userRepository,
         _postRepository = postRepository,
         _authBloc = authBloc,
@@ -32,7 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   @override
   Future<void> close() {
-    _postsSubscription.cancel();
+    _postsSubscription?.cancel();
     return super.close();
   }
 
@@ -59,10 +58,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield state.copyWith(status: ProfileStatus.loading);
     try {
       final user = await _userRepository.getUserWithId(userId: event.userId);
-      final isCurrentUser = _authBloc.state.user.uid == event.userId;
+      final isCurrentUser = _authBloc.state.user!.uid == event.userId;
 
       final isFollowing = await _userRepository.isFollowing(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         otherUserId: event.userId,
       );
 
@@ -99,7 +98,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async* {
     yield state.copyWith(posts: event.posts);
     final likedPostIds = await _postRepository.getLikedPostIds(
-      userId: _authBloc.state.user.uid,
+      userId: _authBloc.state.user!.uid,
       posts: event.posts,
     );
     _likedPostsCubit.updateLikedPosts(postIds: likedPostIds);
@@ -108,7 +107,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapProfileFollowUserToState() async* {
     try {
       _userRepository.followUser(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         followUserId: state.user.id,
       );
       final updatedUser =
@@ -126,7 +125,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapProfileUnfollowUserToState() async* {
     try {
       _userRepository.unfollowUser(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         unfollowUserId: state.user.id,
       );
       final updatedUser =

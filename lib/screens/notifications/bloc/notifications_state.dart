@@ -3,14 +3,14 @@ part of 'notifications_bloc.dart';
 enum NotificationsStatus { initial, loading, loaded, error }
 
 class NotificationsState extends Equatable {
-  final List<Notif> notifications;
+  final List<Notif?> notifications;
   final NotificationsStatus status;
   final Failure failure;
 
   const NotificationsState({
-    @required this.notifications,
-    @required this.status,
-    @required this.failure,
+    required this.notifications,
+    required this.status,
+    required this.failure,
   });
 
   factory NotificationsState.initial() {
@@ -22,12 +22,12 @@ class NotificationsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [notifications, status, failure];
+  List<Object?> get props => [notifications, status, failure];
 
   NotificationsState copyWith({
-    List<Notif> notifications,
-    NotificationsStatus status,
-    Failure failure,
+    List<Notif?>? notifications,
+    NotificationsStatus? status,
+    Failure? failure,
   }) {
     return NotificationsState(
       notifications: notifications ?? this.notifications,

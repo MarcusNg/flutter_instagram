@@ -5,10 +5,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageHelper {
-  static Future<File> pickImageFromGallery({
-    @required BuildContext context,
-    @required CropStyle cropStyle,
-    @required String title,
+  static Future<File?> pickImageFromGallery({
+    required BuildContext context,
+    required CropStyle cropStyle,
+    required String title,
   }) async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);

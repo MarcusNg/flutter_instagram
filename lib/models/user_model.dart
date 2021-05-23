@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 class User extends Equatable {
   final String id;
@@ -12,13 +11,13 @@ class User extends Equatable {
   final String bio;
 
   const User({
-    @required this.id,
-    @required this.username,
-    @required this.email,
-    @required this.profileImageUrl,
-    @required this.followers,
-    @required this.following,
-    @required this.bio,
+    required this.id,
+    required this.username,
+    required this.email,
+    required this.profileImageUrl,
+    required this.followers,
+    required this.following,
+    required this.bio,
   });
 
   static const empty = User(
@@ -32,7 +31,7 @@ class User extends Equatable {
   );
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         username,
         email,
@@ -43,13 +42,13 @@ class User extends Equatable {
       ];
 
   User copyWith({
-    String id,
-    String username,
-    String email,
-    String profileImageUrl,
-    int followers,
-    int following,
-    String bio,
+    String? id,
+    String? username,
+    String? email,
+    String? profileImageUrl,
+    int? followers,
+    int? following,
+    String? bio,
   }) {
     return User(
       id: id ?? this.id,
@@ -74,8 +73,7 @@ class User extends Equatable {
   }
 
   factory User.fromDocument(DocumentSnapshot doc) {
-    if (doc == null) return null;
-    final data = doc.data();
+    final data = doc.data() as Map<String, dynamic>;
     return User(
       id: doc.id,
       username: data['username'] ?? '',

@@ -8,9 +8,9 @@ class SearchState extends Equatable {
   final Failure failure;
 
   const SearchState({
-    @required this.users,
-    @required this.status,
-    @required this.failure,
+    required this.users,
+    required this.status,
+    required this.failure,
   });
 
   factory SearchState.initial() {
@@ -22,12 +22,12 @@ class SearchState extends Equatable {
   }
 
   @override
-  List<Object> get props => [users, status, failure];
+  List<Object?> get props => [users, status, failure];
 
   SearchState copyWith({
-    List<User> users,
-    SearchStatus status,
-    Failure failure,
+    List<User>? users,
+    SearchStatus? status,
+    Failure? failure,
   }) {
     return SearchState(
       users: users ?? this.users,

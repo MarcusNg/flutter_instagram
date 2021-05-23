@@ -6,7 +6,6 @@ import 'package:flutter_instagram/blocs/blocs.dart';
 import 'package:flutter_instagram/cubits/cubits.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'feed_event.dart';
 part 'feed_state.dart';
@@ -17,9 +16,9 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
   final LikedPostsCubit _likedPostsCubit;
 
   FeedBloc({
-    @required PostRepository postRepository,
-    @required AuthBloc authBloc,
-    @required LikedPostsCubit likedPostsCubit,
+    required PostRepository postRepository,
+    required AuthBloc authBloc,
+    required LikedPostsCubit likedPostsCubit,
   })  : _postRepository = postRepository,
         _authBloc = authBloc,
         _likedPostsCubit = likedPostsCubit,
@@ -38,12 +37,12 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     yield state.copyWith(posts: [], status: FeedStatus.loading);
     try {
       final posts =
-          await _postRepository.getUserFeed(userId: _authBloc.state.user.uid);
+          await _postRepository.getUserFeed(userId: _authBloc.state.user!.uid);
 
       _likedPostsCubit.clearAllLikedPosts();
 
       final likedPostIds = await _postRepository.getLikedPostIds(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         posts: posts,
       );
       _likedPostsCubit.updateLikedPosts(postIds: likedPostIds);
@@ -60,16 +59,16 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
   Stream<FeedState> _mapFeedPaginatePostsToState() async* {
     yield state.copyWith(status: FeedStatus.paginating);
     try {
-      final lastPostId = state.posts.isNotEmpty ? state.posts.last.id : null;
+      final lastPostId = state.posts.isNotEmpty ? state.posts.last!.id : null;
 
       final posts = await _postRepository.getUserFeed(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         lastPostId: lastPostId,
       );
-      final updatedPosts = List<Post>.from(state.posts)..addAll(posts);
+      final updatedPosts = List<Post?>.from(state.posts)..addAll(posts);
 
       final likedPostIds = await _postRepository.getLikedPostIds(
-        userId: _authBloc.state.user.uid,
+        userId: _authBloc.state.user!.uid,
         posts: posts,
       );
       _likedPostsCubit.updateLikedPosts(postIds: likedPostIds);

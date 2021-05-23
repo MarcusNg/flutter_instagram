@@ -7,10 +7,10 @@ class BottomNavBar extends StatelessWidget {
   final Function(int) onTap;
 
   const BottomNavBar({
-    Key key,
-    @required this.items,
-    @required this.selectedItem,
-    @required this.onTap,
+    Key? key,
+    required this.items,
+    required this.selectedItem,
+    required this.onTap,
   }) : super(key: key);
 
   @override

@@ -11,13 +11,13 @@ import 'package:intl/intl.dart';
 class CommentsScreenArgs {
   final Post post;
 
-  const CommentsScreenArgs({@required this.post});
+  const CommentsScreenArgs({required this.post});
 }
 
 class CommentsScreen extends StatefulWidget {
   static const String routeName = '/comments';
 
-  static Route route({@required CommentsScreenArgs args}) {
+  static Route route({required CommentsScreenArgs args}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => BlocProvider<CommentsBloc>(
@@ -65,7 +65,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               return ListTile(
                 leading: UserProfileImage(
                   radius: 22.0,
-                  profileImageUrl: comment.author.profileImageUrl,
+                  profileImageUrl: comment!.author.profileImageUrl,
                 ),
                 title: Text.rich(
                   TextSpan(

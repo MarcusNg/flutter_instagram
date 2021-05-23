@@ -11,8 +11,8 @@ class NotificationTile extends StatelessWidget {
   final Notif notification;
 
   const NotificationTile({
-    Key key,
-    @required this.notification,
+    Key? key,
+    required this.notification,
   }) : super(key: key);
 
   @override
@@ -70,12 +70,12 @@ class NotificationTile extends StatelessWidget {
       return GestureDetector(
         onTap: () => Navigator.of(context).pushNamed(
           CommentsScreen.routeName,
-          arguments: CommentsScreenArgs(post: notification.post),
+          arguments: CommentsScreenArgs(post: notification.post!),
         ),
         child: CachedNetworkImage(
           height: 60.0,
           width: 60.0,
-          imageUrl: notification.post.imageUrl,
+          imageUrl: notification.post!.imageUrl,
           fit: BoxFit.cover,
         ),
       );

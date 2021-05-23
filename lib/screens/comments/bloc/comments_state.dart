@@ -3,16 +3,16 @@ part of 'comments_bloc.dart';
 enum CommentsStatus { initial, loading, loaded, submitting, error }
 
 class CommentsState extends Equatable {
-  final Post post;
-  final List<Comment> comments;
+  final Post? post;
+  final List<Comment?> comments;
   final CommentsStatus status;
   final Failure failure;
 
   const CommentsState({
-    @required this.post,
-    @required this.comments,
-    @required this.status,
-    @required this.failure,
+    required this.post,
+    required this.comments,
+    required this.status,
+    required this.failure,
   });
 
   factory CommentsState.initial() {
@@ -25,13 +25,13 @@ class CommentsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [post, comments, status, failure];
+  List<Object?> get props => [post, comments, status, failure];
 
   CommentsState copyWith({
-    Post post,
-    List<Comment> comments,
-    CommentsStatus status,
-    Failure failure,
+    Post? post,
+    List<Comment?>? comments,
+    CommentsStatus? status,
+    Failure? failure,
   }) {
     return CommentsState(
       post: post ?? this.post,

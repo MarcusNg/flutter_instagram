@@ -21,7 +21,7 @@ class NotificationsScreen extends StatelessWidget {
                 itemCount: state.notifications.length,
                 itemBuilder: (BuildContext context, int index) {
                   final notification = state.notifications[index];
-                  return NotificationTile(notification: notification);
+                  return NotificationTile(notification: notification!);
                 },
               );
             default:

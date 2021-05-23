@@ -3,18 +3,18 @@ part of 'edit_profile_cubit.dart';
 enum EditProfileStatus { initial, submitting, success, error }
 
 class EditProfileState extends Equatable {
-  final File profileImage;
+  final File? profileImage;
   final String username;
   final String bio;
   final EditProfileStatus status;
   final Failure failure;
 
   const EditProfileState({
-    @required this.profileImage,
-    @required this.username,
-    @required this.bio,
-    @required this.status,
-    @required this.failure,
+    required this.profileImage,
+    required this.username,
+    required this.bio,
+    required this.status,
+    required this.failure,
   });
 
   factory EditProfileState.initial() {
@@ -28,7 +28,7 @@ class EditProfileState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         profileImage,
         username,
         bio,
@@ -37,11 +37,11 @@ class EditProfileState extends Equatable {
       ];
 
   EditProfileState copyWith({
-    File profileImage,
-    String username,
-    String bio,
-    EditProfileStatus status,
-    Failure failure,
+    File? profileImage,
+    String? username,
+    String? bio,
+    EditProfileStatus? status,
+    Failure? failure,
   }) {
     return EditProfileState(
       profileImage: profileImage ?? this.profileImage,

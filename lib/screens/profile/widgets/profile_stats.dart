@@ -9,12 +9,12 @@ class ProfileStats extends StatelessWidget {
   final int following;
 
   const ProfileStats({
-    Key key,
-    @required this.isCurrentUser,
-    @required this.isFollowing,
-    @required this.posts,
-    @required this.followers,
-    @required this.following,
+    Key? key,
+    required this.isCurrentUser,
+    required this.isFollowing,
+    required this.posts,
+    required this.followers,
+    required this.following,
   }) : super(key: key);
 
   @override
@@ -50,9 +50,9 @@ class _Stats extends StatelessWidget {
   final String label;
 
   const _Stats({
-    Key key,
-    @required this.count,
-    @required this.label,
+    Key? key,
+    required this.count,
+    required this.label,
   }) : super(key: key);
 
   @override

@@ -12,10 +12,10 @@ class PostView extends StatelessWidget {
   final bool recentlyLiked;
 
   const PostView({
-    Key key,
-    @required this.post,
-    @required this.isLiked,
-    @required this.onLike,
+    Key? key,
+    required this.post,
+    required this.isLiked,
+    required this.onLike,
     this.recentlyLiked = false,
   }) : super(key: key);
 

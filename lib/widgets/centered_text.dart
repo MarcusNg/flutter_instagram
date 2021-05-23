@@ -4,8 +4,8 @@ class CenteredText extends StatelessWidget {
   final String text;
 
   const CenteredText({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
 
   @override

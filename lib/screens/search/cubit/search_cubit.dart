@@ -2,14 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   final UserRepository _userRepository;
 
-  SearchCubit({@required UserRepository userRepository})
+  SearchCubit({required UserRepository userRepository})
       : _userRepository = userRepository,
         super(SearchState.initial());
 

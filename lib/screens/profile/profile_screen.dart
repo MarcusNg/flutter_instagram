@@ -12,13 +12,13 @@ import 'package:flutter_instagram/widgets/widgets.dart';
 class ProfileScreenArgs {
   final String userId;
 
-  const ProfileScreenArgs({@required this.userId});
+  const ProfileScreenArgs({required this.userId});
 }
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = '/profile';
 
-  static Route route({@required ProfileScreenArgs args}) {
+  static Route route({required ProfileScreenArgs args}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => BlocProvider<ProfileBloc>(
@@ -39,7 +39,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -95,7 +95,6 @@ class _ProfileScreenState extends State<ProfileScreen>
             context
                 .read<ProfileBloc>()
                 .add(ProfileLoadUser(userId: state.user.id));
-            return true;
           },
           child: CustomScrollView(
             slivers: [
@@ -161,10 +160,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                           return GestureDetector(
                             onTap: () => Navigator.of(context).pushNamed(
                               CommentsScreen.routeName,
-                              arguments: CommentsScreenArgs(post: post),
+                              arguments: CommentsScreenArgs(post: post!),
                             ),
                             child: CachedNetworkImage(
-                              imageUrl: post.imageUrl,
+                              imageUrl: post!.imageUrl,
                               fit: BoxFit.cover,
                             ),
                           );
@@ -179,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           final likedPostsState =
                               context.watch<LikedPostsCubit>().state;
                           final isLiked =
-                              likedPostsState.likedPostIds.contains(post.id);
+                              likedPostsState.likedPostIds.contains(post!.id);
                           return PostView(
                             post: post,
                             isLiked: isLiked,

@@ -11,10 +11,10 @@ class LoginState extends Equatable {
   bool get isFormValid => email.isNotEmpty && password.isNotEmpty;
 
   const LoginState({
-    @required this.email,
-    @required this.password,
-    @required this.status,
-    @required this.failure,
+    required this.email,
+    required this.password,
+    required this.status,
+    required this.failure,
   });
 
   factory LoginState.initial() {
@@ -30,13 +30,13 @@ class LoginState extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [email, password, status, failure];
+  List<Object?> get props => [email, password, status, failure];
 
   LoginState copyWith({
-    String email,
-    String password,
-    LoginStatus status,
-    Failure failure,
+    String? email,
+    String? password,
+    LoginStatus? status,
+    Failure? failure,
   }) {
     return LoginState(
       email: email ?? this.email,

@@ -13,11 +13,11 @@ class SignupState extends Equatable {
       username.isNotEmpty && email.isNotEmpty && password.isNotEmpty;
 
   const SignupState({
-    @required this.username,
-    @required this.email,
-    @required this.password,
-    @required this.status,
-    @required this.failure,
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.status,
+    required this.failure,
   });
 
   factory SignupState.initial() {
@@ -34,14 +34,14 @@ class SignupState extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [username, email, password, status, failure];
+  List<Object?> get props => [username, email, password, status, failure];
 
   SignupState copyWith({
-    String username,
-    String email,
-    String password,
-    SignupStatus status,
-    Failure failure,
+    String? username,
+    String? email,
+    String? password,
+    SignupStatus? status,
+    Failure? failure,
   }) {
     return SignupState(
       username: username ?? this.username,

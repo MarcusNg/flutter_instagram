@@ -5,8 +5,8 @@ class LikedPostsState extends Equatable {
   final Set<String> recentlyLikedPostIds;
 
   const LikedPostsState({
-    @required this.likedPostIds,
-    @required this.recentlyLikedPostIds,
+    required this.likedPostIds,
+    required this.recentlyLikedPostIds,
   });
 
   factory LikedPostsState.initial() {
@@ -14,11 +14,11 @@ class LikedPostsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [likedPostIds, recentlyLikedPostIds];
+  List<Object?> get props => [likedPostIds, recentlyLikedPostIds];
 
   LikedPostsState copyWith({
-    Set<String> likedPostIds,
-    Set<String> recentlyLikedPostIds,
+    Set<String>? likedPostIds,
+    Set<String>? recentlyLikedPostIds,
   }) {
     return LikedPostsState(
       likedPostIds: likedPostIds ?? this.likedPostIds,

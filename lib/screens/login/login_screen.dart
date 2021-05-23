@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                               onChanged: (value) => context
                                   .read<LoginCubit>()
                                   .emailChanged(value),
-                              validator: (value) => !value.contains('@')
+                              validator: (value) => !value!.contains('@')
                                   ? 'Please enter a valid email.'
                                   : null,
                             ),
@@ -80,15 +80,16 @@ class LoginScreen extends StatelessWidget {
                               onChanged: (value) => context
                                   .read<LoginCubit>()
                                   .passwordChanged(value),
-                              validator: (value) => value.length < 6
+                              validator: (value) => value!.length < 6
                                   ? 'Must be at least 6 characters.'
                                   : null,
                             ),
                             const SizedBox(height: 28.0),
-                            RaisedButton(
-                              elevation: 1.0,
-                              color: Theme.of(context).primaryColor,
-                              textColor: Colors.white,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Theme.of(context).primaryColor,
+                                textStyle: const TextStyle(color: Colors.white),
+                              ),
                               onPressed: () => _submitForm(
                                 context,
                                 state.status == LoginStatus.submitting,
@@ -96,13 +97,16 @@ class LoginScreen extends StatelessWidget {
                               child: const Text('Log In'),
                             ),
                             const SizedBox(height: 12.0),
-                            RaisedButton(
-                              elevation: 1.0,
-                              color: Colors.grey[200],
-                              textColor: Colors.black,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.grey[200],
+                              ),
                               onPressed: () => Navigator.of(context)
                                   .pushNamed(SignupScreen.routeName),
-                              child: const Text('No account? Sign up'),
+                              child: const Text(
+                                'No account? Sign up',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ],
                         ),
@@ -119,7 +123,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _submitForm(BuildContext context, bool isSubmitting) {
-    if (_formKey.currentState.validate() && !isSubmitting) {
+    if (_formKey.currentState!.validate() && !isSubmitting) {
       context.read<LoginCubit>().logInWithCredentials();
     }
   }

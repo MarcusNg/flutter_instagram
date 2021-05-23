@@ -8,9 +8,9 @@ class ErrorDialog extends StatelessWidget {
   final String content;
 
   const ErrorDialog({
-    Key key,
+    Key? key,
     this.title = 'Error',
-    @required this.content,
+    required this.content,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class ErrorDialog extends StatelessWidget {
       title: Text(title),
       content: Text(content),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Ok'),
         ),

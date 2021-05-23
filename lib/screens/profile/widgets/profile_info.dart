@@ -5,9 +5,9 @@ class ProfileInfo extends StatelessWidget {
   final String bio;
 
   const ProfileInfo({
-    Key key,
-    @required this.username,
-    @required this.bio,
+    Key? key,
+    required this.username,
+    required this.bio,
   }) : super(key: key);
 
   @override

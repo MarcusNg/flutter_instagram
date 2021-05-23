@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_instagram/blocs/blocs.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'create_post_state.dart';
 
@@ -15,9 +14,9 @@ class CreatePostCubit extends Cubit<CreatePostState> {
   final AuthBloc _authBloc;
 
   CreatePostCubit({
-    @required PostRepository postRepository,
-    @required StorageRepository storageRepository,
-    @required AuthBloc authBloc,
+    required PostRepository postRepository,
+    required StorageRepository storageRepository,
+    required AuthBloc authBloc,
   })  : _postRepository = postRepository,
         _storageRepository = storageRepository,
         _authBloc = authBloc,
@@ -34,9 +33,9 @@ class CreatePostCubit extends Cubit<CreatePostState> {
   void submit() async {
     emit(state.copyWith(status: CreatePostStatus.submitting));
     try {
-      final author = User.empty.copyWith(id: _authBloc.state.user.uid);
+      final author = User.empty.copyWith(id: _authBloc.state.user!.uid);
       final postImageUrl =
-          await _storageRepository.uploadPostImage(image: state.postImage);
+          await _storageRepository.uploadPostImage(image: state.postImage!);
 
       final post = Post(
         author: author,

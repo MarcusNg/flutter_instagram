@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 class UserProfileImage extends StatelessWidget {
   final double radius;
   final String profileImageUrl;
-  final File profileImage;
+  final File? profileImage;
 
   const UserProfileImage({
-    Key key,
-    @required this.radius,
-    @required this.profileImageUrl,
+    Key? key,
+    required this.radius,
+    required this.profileImageUrl,
     this.profileImage,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class UserProfileImage extends StatelessWidget {
       radius: radius,
       backgroundColor: Colors.grey[200],
       backgroundImage: profileImage != null
-          ? FileImage(profileImage)
+          ? FileImage(profileImage!) as ImageProvider
           : profileImageUrl.isNotEmpty
               ? CachedNetworkImageProvider(profileImageUrl)
               : null,
@@ -29,7 +29,7 @@ class UserProfileImage extends StatelessWidget {
     );
   }
 
-  Icon _noProfileIcon() {
+  Icon? _noProfileIcon() {
     if (profileImage == null && profileImageUrl.isEmpty) {
       return Icon(
         Icons.account_circle,

@@ -2,14 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_instagram/models/models.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final AuthRepository _authRepository;
 
-  LoginCubit({@required AuthRepository authRepository})
+  LoginCubit({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super(LoginState.initial());
 

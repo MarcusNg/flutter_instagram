@@ -11,13 +11,13 @@ import 'package:image_cropper/image_cropper.dart';
 class EditProfileScreenArgs {
   final BuildContext context;
 
-  const EditProfileScreenArgs({@required this.context});
+  const EditProfileScreenArgs({required this.context});
 }
 
 class EditProfileScreen extends StatelessWidget {
   static const String routeName = '/editProfile';
 
-  static Route route({@required EditProfileScreenArgs args}) {
+  static Route route({required EditProfileScreenArgs args}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) => BlocProvider<EditProfileCubit>(
@@ -37,8 +37,8 @@ class EditProfileScreen extends StatelessWidget {
   final User user;
 
   EditProfileScreen({
-    Key key,
-    @required this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -89,7 +89,7 @@ class EditProfileScreen extends StatelessWidget {
                             onChanged: (value) => context
                                 .read<EditProfileCubit>()
                                 .usernameChanged(value),
-                            validator: (value) => value.trim().isEmpty
+                            validator: (value) => value!.trim().isEmpty
                                 ? 'Username cannot be empty.'
                                 : null,
                           ),
@@ -100,15 +100,16 @@ class EditProfileScreen extends StatelessWidget {
                             onChanged: (value) => context
                                 .read<EditProfileCubit>()
                                 .bioChanged(value),
-                            validator: (value) => value.trim().isEmpty
+                            validator: (value) => value!.trim().isEmpty
                                 ? 'Bio cannot be empty.'
                                 : null,
                           ),
                           const SizedBox(height: 28.0),
-                          RaisedButton(
-                            elevation: 1.0,
-                            color: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Theme.of(context).primaryColor,
+                              textStyle: const TextStyle(color: Colors.white),
+                            ),
                             onPressed: () => _submitForm(
                               context,
                               state.status == EditProfileStatus.submitting,
@@ -140,7 +141,7 @@ class EditProfileScreen extends StatelessWidget {
   }
 
   void _submitForm(BuildContext context, bool isSubmitting) {
-    if (_formKey.currentState.validate() && !isSubmitting) {
+    if (_formKey.currentState!.validate() && !isSubmitting) {
       context.read<EditProfileCubit>().submit();
     }
   }

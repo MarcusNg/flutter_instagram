@@ -23,10 +23,10 @@ class CreatePostScreen extends StatelessWidget {
         body: BlocConsumer<CreatePostCubit, CreatePostState>(
           listener: (context, state) {
             if (state.status == CreatePostStatus.success) {
-              _formKey.currentState.reset();
+              _formKey.currentState!.reset();
               context.read<CreatePostCubit>().reset();
 
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.green,
                   duration: const Duration(seconds: 1),
@@ -52,7 +52,7 @@ class CreatePostScreen extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.grey[200],
                       child: state.postImage != null
-                          ? Image.file(state.postImage, fit: BoxFit.cover)
+                          ? Image.file(state.postImage!, fit: BoxFit.cover)
                           : const Icon(
                               Icons.image,
                               color: Colors.grey,
@@ -74,18 +74,19 @@ class CreatePostScreen extends StatelessWidget {
                             onChanged: (value) => context
                                 .read<CreatePostCubit>()
                                 .captionChanged(value),
-                            validator: (value) => value.trim().isEmpty
+                            validator: (value) => value!.trim().isEmpty
                                 ? 'Caption cannot be empty.'
                                 : null,
                           ),
                           const SizedBox(height: 28.0),
-                          RaisedButton(
-                            elevation: 1.0,
-                            color: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Theme.of(context).primaryColor,
+                              textStyle: const TextStyle(color: Colors.white),
+                            ),
                             onPressed: () => _submitForm(
                               context,
-                              state.postImage,
+                              state.postImage!,
                               state.status == CreatePostStatus.submitting,
                             ),
                             child: const Text('Post'),
@@ -114,8 +115,8 @@ class CreatePostScreen extends StatelessWidget {
     }
   }
 
-  void _submitForm(BuildContext context, File postImage, bool isSubmitting) {
-    if (_formKey.currentState.validate() &&
+  void _submitForm(BuildContext context, File? postImage, bool isSubmitting) {
+    if (_formKey.currentState!.validate() &&
         postImage != null &&
         !isSubmitting) {
       context.read<CreatePostCubit>().submit();
