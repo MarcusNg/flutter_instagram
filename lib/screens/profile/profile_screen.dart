@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_instagram/blocs/blocs.dart';
 import 'package:flutter_instagram/cubits/cubits.dart';
+import 'package:flutter_instagram/main.dart';
 import 'package:flutter_instagram/repositories/repositories.dart';
 import 'package:flutter_instagram/screens/profile/bloc/profile_bloc.dart';
 import 'package:flutter_instagram/screens/profile/widgets/widgets.dart';
@@ -75,6 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   onPressed: () {
                     context.read<AuthBloc>().add(AuthLogoutRequested());
                     context.read<LikedPostsCubit>().clearAllLikedPosts();
+                    MyApp.navigatorKey.currentState!
+                        .pushReplacementNamed(LoginScreen.routeName);
                   },
                 ),
             ],

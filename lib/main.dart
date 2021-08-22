@@ -19,6 +19,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -53,6 +56,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           title: 'Flutter Instagram',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
