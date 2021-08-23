@@ -55,13 +55,13 @@ class TabNavigator extends StatelessWidget {
             authBloc: context.read<AuthBloc>(),
             likedPostsCubit: context.read<LikedPostsCubit>(),
           )..add(FeedFetchPosts()),
-          child: FeedScreen(),
+          child: const FeedScreen(),
         );
       case BottomNavItem.search:
         return BlocProvider<SearchCubit>(
           create: (context) =>
               SearchCubit(userRepository: context.read<UserRepository>()),
-          child: SearchScreen(),
+          child: const SearchScreen(),
         );
       case BottomNavItem.create:
         return BlocProvider<CreatePostCubit>(
@@ -78,7 +78,7 @@ class TabNavigator extends StatelessWidget {
             notificationRepository: context.read<NotificationRepository>(),
             authBloc: context.read<AuthBloc>(),
           ),
-          child: NotificationsScreen(),
+          child: const NotificationsScreen(),
         );
       case BottomNavItem.profile:
         return BlocProvider<ProfileBloc>(
@@ -90,7 +90,7 @@ class TabNavigator extends StatelessWidget {
           )..add(
               ProfileLoadUser(userId: context.read<AuthBloc>().state.user!.uid),
             ),
-          child: ProfileScreen(),
+          child: const ProfileScreen(),
         );
       default:
         return Scaffold();

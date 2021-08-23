@@ -19,6 +19,8 @@ class ProfileScreenArgs {
 class ProfileScreen extends StatefulWidget {
   static const String routeName = '/profile';
 
+  const ProfileScreen();
+
   static Route route({required ProfileScreenArgs args}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
@@ -29,7 +31,7 @@ class ProfileScreen extends StatefulWidget {
           authBloc: context.read<AuthBloc>(),
           likedPostsCubit: context.read<LikedPostsCubit>(),
         )..add(ProfileLoadUser(userId: args.userId)),
-        child: ProfileScreen(),
+        child: const ProfileScreen(),
       ),
     );
   }

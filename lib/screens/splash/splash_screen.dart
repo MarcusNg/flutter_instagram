@@ -20,8 +20,10 @@ class SplashScreen extends StatelessWidget {
       child: BlocListener<AuthBloc, AuthState>(
         listenWhen: (prevState, state) =>
             prevState.status == AuthStatus.unknown ||
-            state.status ==
-                AuthStatus.authenticated, // Only run on first launch.
+            (prevState.status == AuthStatus.unauthenticated &&
+                state.status ==
+                    AuthStatus
+                        .authenticated), // Run on first launch OR on sign up/in.
         listener: (context, state) {
           if (state.status == AuthStatus.unauthenticated) {
             // Go to the Login Screen.

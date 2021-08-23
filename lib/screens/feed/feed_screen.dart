@@ -7,6 +7,8 @@ import 'package:flutter_instagram/widgets/widgets.dart';
 class FeedScreen extends StatefulWidget {
   static const String routeName = '/feed';
 
+  const FeedScreen();
+
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }

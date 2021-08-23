@@ -7,6 +7,8 @@ import 'package:flutter_instagram/widgets/widgets.dart';
 class SearchScreen extends StatefulWidget {
   static const String routeName = '/search';
 
+  const SearchScreen();
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }

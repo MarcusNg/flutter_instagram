@@ -7,6 +7,8 @@ import 'package:flutter_instagram/widgets/widgets.dart';
 class NotificationsScreen extends StatelessWidget {
   static const String routeName = '/notifications';
 
+  const NotificationsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
